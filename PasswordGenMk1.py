@@ -1,67 +1,78 @@
 import random
-#Global variable
-lowerCaseAlphabetYesorNo = ""
-upperCaseAlphabetYesorNo = ""
-PasswordLength = 0
-lowerCaseAlphabet = 'abcdefghijklmnopqrstuvwxyz'
-upperCaseAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-userGeneratedPassword = ""
-rangeNumber = 0
-userPossabilities = ""
+if __name__ == '__main__':
+    # Variables:
+    lowercase_alphabet_yes_or_no = ""
+    uppercase_alphabet_yes_or_no = ""
+    password_length = 0
+    lowercase_alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    uppercase_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    user_generated_password = ""
+    number_range = 0
+    user_possabilities = ""
 
+    # --------------------------------------------------------------------------------------------------------
+    # User Input Questions:
 
-#User input questions
-def userInput():
-    global lowerCaseAlphabetYesorNo 
-    lowerCaseAlphabetYesorNo = input("Do you want to use lowercase letters 'y or n' ")
-    global upperCaseAlphabetYesorNo 
-    upperCaseAlphabetYesorNo = input("Do you want to use uppercase letters 'y or n' ")
-    if lowerCaseAlphabetYesorNo == 'n' and upperCaseAlphabetYesorNo == 'n':
-        print("Please select one of the following options with 'y' to continue.")
-        userInput()
+    while password_length <= 0:
+        try:
+            password_length = int(input(
+                "How long would you like your password to be?: "))
+        except ValueError:
+            print("Please enter a number greater than 0")
 
+    while lowercase_alphabet_yes_or_no != 'y' and lowercase_alphabet_yes_or_no != 'n':
+        lowercase_alphabet_yes_or_no = input(
+            "Do you want to use lowercase letters: 'Y' or 'N' ").lower()
+        print("Please select 'Y' or 'N' for the question below to continue: ")
 
-def PasswordLengthQuestion():
-    global PasswordLength 
-    PasswordLength = int(input("How long would you like your password to be?: "))
-    if PasswordLength == 0:
-        print("Please enter a number greater than 0")
-        PasswordLengthQuestion()
+    while uppercase_alphabet_yes_or_no != 'y' and uppercase_alphabet_yes_or_no != 'n':
+        uppercase_alphabet_yes_or_no = input(
+            "Do you want to use uppercase letters: 'Y' or 'N'").lower()
+        print("Please select 'Y' or 'N' for the question below to continue: ")
 
+    # --------------------------------------------------------------------------------------
+    # Taking user input and updating For Loop in next section:
 
-userInput()
-PasswordLengthQuestion()
+    if uppercase_alphabet_yes_or_no == 'y' and lowercase_alphabet_yes_or_no == 'n':
+        user_possabilities = uppercase_alphabet
+        number_range = 25
+    if lowercase_alphabet_yes_or_no == 'y' and uppercase_alphabet_yes_or_no == 'n':
+        user_possabilities = lowercase_alphabet
+        number_range = 25
+    if lowercase_alphabet_yes_or_no == 'y' and uppercase_alphabet_yes_or_no == 'y':
+        user_possabilities = lowercase_alphabet + uppercase_alphabet
+        number_range = 51
+    if lowercase_alphabet_yes_or_no == 'n' and uppercase_alphabet_yes_or_no == 'n':
+        print("Please select one of the above options:")
 
+    # --------------------------------------------------------------------------------------
+    # Loop for generating userpassword
 
-if upperCaseAlphabetYesorNo == 'y' and lowerCaseAlphabetYesorNo == 'n':
-    userPossabilities = upperCaseAlphabet
-    rangeNumber = 25
-if lowerCaseAlphabetYesorNo == 'y' and upperCaseAlphabetYesorNo == 'n':
-    userPossabilities = lowerCaseAlphabet
-    rangeNumber = 25
-if lowerCaseAlphabetYesorNo == 'y' and upperCaseAlphabetYesorNo == 'y':
-    userPossabilities = lowerCaseAlphabet + upperCaseAlphabet
-    rangeNumber = 51
-if lowerCaseAlphabetYesorNo == 'n' and upperCaseAlphabetYesorNo == 'n':
-    print("Please select one of the above options:")
+    for x in range(0, password_length):
+        a = random.randint(0, number_range)
+        user_generated_password = user_generated_password + \
+            user_possabilities[a]
 
+    print(f"Here is your generated Password: {user_generated_password}")
 
-#Loop for above if statements to generate userpassword
-print(rangeNumber)
-for x in range(0, int(PasswordLength)):
-    a = random.randint(0,rangeNumber)
-    userGeneratedPassword = userGeneratedPassword + userPossabilities[a]
+    # --------------------------------------------------------------------------------------
 
+    ''' 
+To-Do:
+    - Add numbers/Symbols
+    - Give the ability to generate a new password with the saved user settings
+    - Give the ability to generate more then one password.
+    - Look into while loops to replace the userprompts
+    - Consider using functions for the user 'input question' section.
+    -Look into 'Match' statements to make the 'Taking user input and updating For Loop in next section:' 
+     More efficient 
+        - https://www.pythonpool.com/match-case-python/
+    - Dictionaries for lowercase_alphabet_yes_or_no, etc..
+    - use string library to do away with variables containing alphabet characters. 
+        - https://docs.python.org/3/library/string.html
 
-print(userGeneratedPassword)
-
-
-''' 
-     ****Goals****
- - Add numbers/Symbols
- - Give the ability to generate a new password with the saved user settings
- - Give the ability to generate more then one password.
- - Add more validation of the user input
- - Use Snake case(Styling)
- - Look into while loops to replace the userprompts
-'''
+    
+Completed:
+    - Use Snake case(Styling)(pep8)
+    - Add more validation of the user input
+    '''
